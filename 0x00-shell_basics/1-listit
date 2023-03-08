@@ -1,2 +1,2 @@
 #!/bin/bash
-echo "downloads pictures libraries document summit"
+echo -e "downloads pictures libraries\ndocument summit\n"
