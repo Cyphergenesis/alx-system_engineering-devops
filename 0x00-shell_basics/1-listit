@@ -1,2 +1,2 @@
 #!/bin/bash
-echo -e "downloads pictures libraries\ndocument summit\n"
+echo -e " 0-current_working_directory 1-listit README.md\n"
