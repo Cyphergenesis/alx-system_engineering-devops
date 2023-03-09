@@ -1,2 +1,2 @@
- How to navigate bash shell efficiently without breaking a 
-sweat
+ How to navigate bash shell efficiently and answers
+tasks correctly
