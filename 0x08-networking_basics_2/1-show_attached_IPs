@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+#Bash script displays all active IPv4 IPs
+
+#!/bin/bash
+
+# Get all network interface names
+interface_names=$(ip -o link show | awk -F': ' '{print $2}')
+
+# Loop through each interface and get its IPv4 address
+for interface in $interface_names; do
+    ipv4_address=$(ip -o -4 addr show "$interface" | awk '{print $4}')
+    if [ -n "$ipv4_address" ]; then
+        echo "Interface: $interface, IPv4 Address: $ipv4_address"
+    fi
+done
+
