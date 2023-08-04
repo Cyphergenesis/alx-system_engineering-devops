@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+
+# Function to get program name from PID
+get_program_name() {
+    local pid=$1
+    local comm_path="/proc/$pid/comm"
+    if [ -f "$comm_path" ]; then
+        cat "$comm_path"
+    fi
+}
+
+# Function to check if the given port is listening
+is_listening_port() {
+    local port=$1
+    local protocol=$2
+    local listening_ports=$(ss -tuln${protocol} 2>/dev/null | awk 'NR>1{print $4}')
+    if grep -q ":${port}$" <<< "$listening_ports"; then
+        return 0
+    else
+        return 1
+    fi
+}
+
+# Display the header
+echo "Protocol   Local Address          PID/Program name"
+
+# Loop through TCP listening ports
+while read -r tcp_port; do
+    if is_listening_port "$tcp_port" "t"; then
+        pid=$(ss -tulnp | awk -v port=":$tcp_port " '$4 ~ port {print $NF}' | sed -e 's/,//')
+        program_name=$(get_program_name "$pid")
+        printf "TCP       %-23s %s/%s\n" "0.0.0.0:$tcp_port" "$pid" "$program_name"
+    fi
+done < <(seq 1 65535)
+
+# Loop through UDP listening ports
+while read -r udp_port; do
+    if is_listening_port "$udp_port" "u"; then
+        pid=$(ss -tulnp | awk -v port=":$udp_port " '$4 ~ port {print $NF}' | sed -e 's/,//')
+        program_name=$(get_program_name "$pid")
+        printf "UDP       %-23s %s/%s\n" "0.0.0.0:$udp_port" "$pid" "$program_name"
+    fi
+done < <(seq 1 65535)
+
