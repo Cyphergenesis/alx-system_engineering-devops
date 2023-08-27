@@ -1,1 +1,70 @@
 https://lh3.googleusercontent.com/pw/AIL4fc-RBeFTPazq_js9J5A824CxryPq2Opvx8myuvhvWKJXZnVJ9s6r-XOBhGMMHFE9dqtXFKm_FicjtCO1q0bdnbVWeAPPlQ0iJwsn9QpuTI7RAVetVyTLDGUK2UGjM5I4GiGhLO9goL-fsbUDWjiXP2oErn0e_NZRxL_LIo0XqTrjd0hixUMuV3XF3vYDrg5xYme5hh7kceDFpd9jdJv3p3l93gmLhStn1TkuuMOj3NSIaMjrnZGDNatHgrQeXryWXdVrhtr9K-TBiX_LxUFKpHbODn70QUkNjzhJALZaNMTUFeJUbdzkFk_dWT9MAn_81XvP5Tnaa7R73YFOzPUxYN0wlxk0HMElb1Sj4cMTAPQj87q73LJ8_IpBIolfz9ejRU-S2HsJJZHPJyBhw79Pd3vPJcy53Ts0k6ZYtJamM4NH2ALFyPpDFw4Ur5tnKAjmY5RE4VGBK0D1udi9XztVrS1oZFFff16n7_tRfSH1f-x6cagOS8-SmlIZHrxH10qMwDQMp3BTtweKL6zormYiFw1Gm6hfJpMmk_r4LwBrKmOASs89z_8x_FBD694s2eyqfMyZMy6zipYmLBV4dWMK-OifVyfYRFuEiFfi2ztkEgILzHDqWzHioyMJLbi-lYzMc5cgM_DiEqUXIkV65Fhj0unFWNAgWp42eXrw2x1nHdp3OefUlzZbHkqStukb2SBtP2GaaInRPaR2s8_SZcHb7GBKjSpEUW2K8RTXa4d6i99OxMMCVpEoa1ABD2qgaQz9Wi3HYWoTJWTNFAfo0tmrZVvvve76GN8R-fpzJy-wU3h0vA-kqwC3P6rjxc7v4LFHOhsYrdjQcWNCi-An7vPI4GWD5gJWArrqCYANU_CxOmH09NpKdLvCqaUGbhaJN34VlwONBKQ8z6dkhmvg9njCMqmgeuFoHlcMyNLFuXj9jdkp315wdu3QTw=w851-h488-s-no?authuser=0
+
+
+
+
+
+1. Adding Elements and Their Purpose:
+
+   - Load Balancer (HAProxy):
+     - Reason: We add a load balancer to distribute incoming user requests evenly between multiple servers. This ensures high availability, scalability, and redundancy.
+     
+   - Application Server:
+     - Reason: An application server hosts the website's logic, processes user requests, and generates dynamic content. Adding an application server is crucial for handling the web application's functionality.
+   
+   - Database Server (Primary-Replica Cluster):
+     - Reason: A database server stores and manages the website's data. Implementing a Primary-Replica cluster enhances data availability, scalability, and fault tolerance.
+
+2. Load Balancer Configuration and Distribution Algorithm:
+
+   -Distribution Algorithm**: The load balancer (HAProxy) can be configured with a distribution algorithm such as round-robin, least connections, or source IP hashing. Round-robin is a simple method where each new request is sent to the next available server in the list. It ensures even distribution of traffic among the servers.
+
+3. Active-Active vs. Active-Passive Setup:
+
+   -Active-Active Setup**: In an Active-Active setup, both servers (load balancer and application server) are actively handling traffic simultaneously. This configuration improves performance and redundancy. If one server fails, the other can still serve requests.
+   
+   -Active-Passive Setup: In an Active-Passive setup, one server is actively handling traffic (e.g., the load balancer), while the other remains passive, essentially on standby. The passive server becomes active only when the primary server fails. This configuration provides redundancy but may underutilize resources during normal operation.
+
+   -In this infrastructure, an Active-Active setup is preferred for both the load balancer and the application server to maximize resource utilization and fault tolerance.
+
+4. Database Primary-Replica (Master-Slave) Cluster:
+
+   - In a Primary-Replica (Master-Slave) database cluster:
+   Primary Node (Master): 
+   is the main database server responsible for handling write operations (e.g., INSERT, UPDATE, DELETE). It receives and processes all database changes.
+    Replica Node (Slave): 
+    is a secondary database server that replicates data from the Primary Node. It is used for read operations (e.g., SELECT). Replicas help distribute read traffic, improve query performance, and provide fault tolerance.
+   
+   - Data changes made to the Primary Node are asynchronously replicated to the Replica Node(s) to maintain data consistency.
+
+5. Difference Between Primary and Replica Nodes in Regards to the Application:
+
+   - Primary Node:
+     - Responsible for handling write operations, such as user registrations, form submissions, and updates to data.
+     - Serves as the authoritative source of data changes.
+   
+   - Replica Node(s):
+     - Handle read operations, such as retrieving content, articles, or user profiles.
+     - Improve application performance by offloading read traffic from the Primary Node.
+     - Can continue serving read requests even if the Primary Node experiences downtime.
+  
+
+
+Issues are with this infrastructure:
+
+
+    Single Points of Failure (SPOFs):
+
+        Load Balancer: Although the load balancer provides redundancy, if it becomes unavailable or experiences issues, it could still serve as a single point of failure for routing user requests. Implementing load balancer redundancy (a secondary load balancer) or utilizing a cloud-based load balancing service can help mitigate this risk.
+
+        Primary Database Node: In a Primary-Replica cluster, the Primary Node remains a potential SPOF for write operations. If it goes down, write operations will be unavailable until it is restored. Implementing a failover mechanism, such as automatic promotion of a Replica to Primary in case of Primary failure, can reduce this risk.
+
+    Security Issues:
+
+        No Firewall: The infrastructure lacks a dedicated firewall to control and secure incoming and outgoing traffic. A firewall is essential for controlling access to the servers and protecting them from unauthorized access and attacks. Implementing a properly configured firewall is crucial for security.
+
+        No HTTPS: The absence of HTTPS (SSL/TLS encryption) poses a security risk, especially if the website handles sensitive data like user credentials or personal information. Implementing HTTPS ensures data confidentiality and integrity during transit between users and the web server. Acquiring and configuring SSL/TLS certificates is essential for website security.
+
+    No Monitoring:
+        The infrastructure does not include a monitoring system to track server health, performance, and security. Monitoring is crucial for detecting and responding to issues promptly. Implementing monitoring tools and practices can help identify and address problems before they impact users.
+
