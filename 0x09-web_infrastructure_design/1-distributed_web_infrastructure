@@ -17,11 +17,11 @@ https://lh3.googleusercontent.com/pw/AIL4fc-RBeFTPazq_js9J5A824CxryPq2Opvx8myuvh
 
 2. Load Balancer Configuration and Distribution Algorithm:
 
-   -Distribution Algorithm**: The load balancer (HAProxy) can be configured with a distribution algorithm such as round-robin, least connections, or source IP hashing. Round-robin is a simple method where each new request is sent to the next available server in the list. It ensures even distribution of traffic among the servers.
+   -Distribution Algorithm: The load balancer (HAProxy) can be configured with a distribution algorithm such as round-robin, least connections, or source IP hashing. Round-robin is a simple method where each new request is sent to the next available server in the list. It ensures even distribution of traffic among the servers.
 
 3. Active-Active vs. Active-Passive Setup:
 
-   -Active-Active Setup**: In an Active-Active setup, both servers (load balancer and application server) are actively handling traffic simultaneously. This configuration improves performance and redundancy. If one server fails, the other can still serve requests.
+   -Active-Active Setup: In an Active-Active setup, both servers (load balancer and application server) are actively handling traffic simultaneously. This configuration improves performance and redundancy. If one server fails, the other can still serve requests.
    
    -Active-Passive Setup: In an Active-Passive setup, one server is actively handling traffic (e.g., the load balancer), while the other remains passive, essentially on standby. The passive server becomes active only when the primary server fails. This configuration provides redundancy but may underutilize resources during normal operation.
 
@@ -30,10 +30,8 @@ https://lh3.googleusercontent.com/pw/AIL4fc-RBeFTPazq_js9J5A824CxryPq2Opvx8myuvh
 4. Database Primary-Replica (Master-Slave) Cluster:
 
    - In a Primary-Replica (Master-Slave) database cluster:
-   Primary Node (Master): 
-   is the main database server responsible for handling write operations (e.g., INSERT, UPDATE, DELETE). It receives and processes all database changes.
-    Replica Node (Slave): 
-    is a secondary database server that replicates data from the Primary Node. It is used for read operations (e.g., SELECT). Replicas help distribute read traffic, improve query performance, and provide fault tolerance.
+   Primary Node (Master): is the main database server responsible for handling write operations (e.g., INSERT, UPDATE, DELETE). It receives and processes all database changes.
+    Replica Node (Slave): is a secondary database server that replicates data from the Primary Node. It is used for read operations (e.g., SELECT). Replicas help distribute read traffic, improve query performance, and provide fault tolerance.
    
    - Data changes made to the Primary Node are asynchronously replicated to the Replica Node(s) to maintain data consistency.
 
