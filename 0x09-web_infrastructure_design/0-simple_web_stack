@@ -1,1 +1,51 @@
 https://lh3.googleusercontent.com/pw/AIL4fc9NKHRqxG1Rcv8_6q05x7hzOj-4inlo68QMGspSd-TJuPXmI_twNd7JoG13ccT1Mgz6vDUiCWLyi45aJY8VBml5acG64NWLmnJhZf5COZitWGEfPpHSp-k-ZUlZNEV1GooWKrCn3wkHW1CrROnL6YTaZbeDGcd0e5hr886ED4w20MzX537YBJDkEp65p_myNTH_dD1XrAbwVgFVS0Ok9jtkKyPYIaAOinzQFoDTtvhXWtUdhGP-1q34jfulW6AZ0wYkJZVN4eSJ_yImJCmbL9hmvfPqF3DaugRfAPb4BDUUTuPMRw7CaeQIrro-8-x31ZsT5NPMwqwvW8-mRNFfFXmQvbcLig1rR57RJJoWfGwTDIQnPwvPZPLI5LhGLBRdRxYjjrVZ66SxC1M0fb5DDIn7B7nG3WWBjh-P4bg9MC8VCmwRlOWws98SZ7LtDkH3tgIUt52oh_mXOjHtdyq3JNLXCdBFC7FWS18Ar1sxgL7lvnevm6L5u6RSHAiwknYzNVraS3nyPMli-uwsx9UbJdDg_Rh0QeSGAoiWIVfow24VIdRby5gTdubeGDqpqOqyVhtrPhV7y6ZzPquujVy5n9O6rRV4YqfG5y56OmDspUCfazcTPcGWp4g7D5ID3BcRrKKqvciiGuXXz_to_TcH4abZIE_uP6sLwnNV4GtJQfYTMH7LDznDocQonlzAsZq0tEI8wEsgbdl5EbZgkiVMBcpVJUnGU_1mV-lS_O3T3oVIm_MPk5ObnxMdY0xQU8uVVC4vk41yRhZT8bv1bj9pUkOCV0g4gEQqBs21umKUnt86mr7tc1Q7t1LxZjzC_pTN2X3oohi2PUKUF1Nili8uD7aJ3v94GFFUFzWE5dWWa3BarhbD-4E_w-GgUV1-FeK_ljufVPyymnBePRpqQP50JdFdSCXB24Z2sH03GVKQbO7o04C6qeUqUA=w1026-h528-s-no?authuser=0
+
+
+
+
+
+1. Server:
+A server, in this context, refers to a computer system or software that stores and serves web content and applications to users over the internet. It responds to requests from users' computers (clients) and delivers the requested web pages.
+
+2. Domain Name:
+The domain name (www.foobar.com) serves as a human-readable and memorable address for your website. It's used to access the website instead of relying on numeric IP addresses, making it easier for users to find and visit your site.
+
+3. Type of DNS Record for www.foobar.com:
+The DNS (Domain Name System) record for www.foobar.com typically includes an "A" (Address) record or a "CNAME" (Canonical Name) record. The "A" record maps the domain to an IP address, while the "CNAME" record points to another domain name, which might be an alias for the actual server's domain.
+
+4. the Web Server:
+The web server's primary role is to receive incoming HTTP or HTTPS requests from users' web browsers. It then retrieves the requested web pages and sends them back to the user's browser for display. In this case, it serves as the first point of contact for the user.
+
+5.Application Server:
+The application server hosts the web application's logic and processes. It receives requests from the web server, performs operations (e.g., retrieving data from the database, running scripts), and generates dynamic content. This server handles the application's business logic and data processing.
+
+6.Role of the Database:
+The database server stores and manages the website's data. It can store user information, content, configuration settings, and more. The application server communicates with the database server to read and write data as needed to serve the user's requests.
+
+7.Server Communication with the User's Computer:
+When a user requests the website at www.foobar.com, the following happens:
+ 	The user's web browser sends an HTTP request to the web server associated with www.foobar.com.
+	The web server processes the request and, if necessary, communicates with the application server to generate dynamic content.
+	If database data is required, the application server communicates with the database server.
+	The web server then sends an HTTP response back to the user's web browser, which renders and displays the requested web page.
+
+
+Issues are with this infrastructure:
+
+Single Point of Failure (SPOF):
+        One of the most significant issues with this infrastructure is that it has a single point of failure (SPOF). If the server experiences hardware failure, software crashes, or any other issue that causes it to become unavailable, the entire website will go down. This results in downtime, which can be detrimental to user experience and business operations.
+
+    Downtime During Maintenance:
+        Performing routine maintenance, such as deploying new code or applying software updates, often requires restarting the web server. During this restart process, the website may become temporarily unavailable to users. This downtime can be disruptive, especially if the website serves critical functions or experiences high traffic volumes.
+
+    Limited Scalability:
+        The infrastructure's inability to scale to handle increased incoming traffic is another significant issue. If the website experiences a sudden surge in traffic, such as during a marketing campaign or a traffic spike due to a viral event, a single server may struggle to keep up with the load. This can lead to slow website performance, increased response times, and potential outages.
+ 
+
+
+
+
+
+
+
+
