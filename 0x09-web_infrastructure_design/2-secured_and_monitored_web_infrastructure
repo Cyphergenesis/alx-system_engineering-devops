@@ -1,1 +1,82 @@
 https://lh3.googleusercontent.com/pw/AIL4fc94LIbgUuvkg7I04jjgLlbgtJvbh6yYPjBHSecwHBTVjFQkmt1l2EHimsyLnivAE-Dd_ccxfwVMbtgrU7oCfyyDcs368up4EFJCvbh9jBq2h--bhGWk3kiC_vKnO5Lgg-fRCDmlAlxWFluhgqcc5qfPv5oFSzBovSRPCyYDrHNrSQh61HGHXVvvhH3c_sRg90VSah16hkeENJxkJMDv6tJ8jgo-Gosrkl1rIdtPWOxjkQ3Cfn4h1ibp--S4SDt9WjN5n14HVMQyj1t_9an2yNDoxgCkYF5AvGhXZW6WAqKKf6aBRyk1Qj8UDvgw3ye4ia9yW7Nezf9QW1AZleYRStk11KAMKwAOYmMPRcgd-zj3Cmpq4a30QujneSSwY--xdjVlp1E35WLJUf-SwExBtGZPub5AYk3DvXMHzgOnSbWWtZb_2HA0dCcZLe3k7OXv0-HTngJmSxH9QXQvs7dg8xLcYnrFcoOi-I89EA4CgrUSI2pjO11SICxyYuHZDaOPDFk_em9ZGilWQ2rHv5YLs-mHKwFD_osoIu2qhgg50WWel2lkzEDyx-xZK7zRb26YNHGTQuTPcYKmSaJ20UUnSBpD7rs9vF_s83AN50G-xlAb0A_RlGRr9KiAfNQ54xbl7aBhn9gIeSc06EjmAJWzreV2cuXDFYcC8iOBZyw92bZTl_pg4jdOUXWfIARyy4vO6z-pS2mWwAp5G83CMK2PBDZW11eUMsLxxN1a6eGkcM76_Pyv1GBvcNmyweGHVZy-ytyOniFMUOrEg9lWgZiUj3JABRnYJzWhE6DvYZpNQmtjhFAh5z3BrZXbPlNBf_CLvphYc8U9vyCYOyEeB2AiVRhFLz-JbJZc6tpfdWf3O-4t90-F8UgxC4RzXAp1poaWLE1-7IkpIy1YTEFl4xjnUtvLzpY61lGgkNZiL2CEg7h7gcwu9IQAjw=w1152-h537-s-no?authuser=0
+
+
+
+
+
+
+        Three Servers: Three servers provide redundancy and load balancing. They ensure high availability and distribute incoming traffic, improving performance and fault tolerance.
+
+        Three Firewalls: Firewalls are added for security. They protect each server by controlling incoming and outgoing network traffic, blocking unauthorized access, and preventing attacks.
+
+        One SSL Certificate: An SSL certificate is used to enable HTTPS. It encrypts data in transit between the user's browser and the web server, ensuring confidentiality and data integrity.
+
+        Three Monitoring Clients (Data Collectors): Monitoring clients collect data about the servers' performance, health, and security. Having three clients allows for redundancy and distributed data collection.
+
+    Firewalls:
+        Firewalls act as a security barrier between the server and the internet. They:
+            Control incoming and outgoing traffic.
+            Filter traffic based on predefined rules.
+            Block malicious or unauthorized access attempts.
+            Prevent unauthorized communication with the server.
+
+    Traffic Served Over HTTPS:
+        HTTPS encrypts the data transmitted between the user's browser and the web server. It serves several critical purposes:
+            Ensures data confidentiality by preventing eavesdropping on sensitive information.
+            Guarantees data integrity, ensuring that the data received is not tampered with in transit.
+            Builds trust with users, as they see the padlock icon and know their connection is secure.
+            Helps improve SEO rankings, as search engines prioritize secure websites.
+
+    Monitoring:
+        Monitoring is used to:
+            Ensure server health and performance.
+            Detect and respond to anomalies and issues.
+            Maintain high availability and minimize downtime.
+            Optimize resource utilization and scalability.
+            Enhance security by identifying and mitigating threats.
+            Provide historical data for capacity planning and troubleshooting.
+
+    How the Monitoring Tool Is Collecting Data:
+        Monitoring tools collect data through agents or data collectors installed on the servers. These agents:
+            Collect server metrics (CPU usage, memory, disk space, network traffic).
+            Monitor server logs for errors and anomalies.
+            Check services and applications for availability and performance.
+            Send collected data to a centralized monitoring server or cloud-based service.
+            Generate alerts based on predefined thresholds or anomalies in the data.
+
+    How to Monitor Web Server QPS (Queries Per Second):
+        To monitor web server QPS:
+            Install a monitoring agent or client on the web server.
+            Configure the agent to collect web server metrics, including requests per second.
+            Set up alerting thresholds for QPS to receive notifications if the threshold is exceeded.
+            Use a monitoring dashboard or tool to visualize QPS trends and historical data.
+            Adjust server resources or optimize web applications based on QPS data to ensure optimal performance.
+
+
+
+Issues are with this infrastructure:
+
+
+Terminating SSL at the Load Balancer Level:
+
+        SSL Termination Issue: While terminating SSL at the load balancer is a common practice to offload encryption from application servers, it can create security concerns. When SSL is terminated at the load balancer, traffic between the load balancer and the application servers is typically unencrypted. If an attacker gains access to this internal network, they could potentially eavesdrop on sensitive data.
+
+        Security Risk: Sensitive data, such as user credentials or payment information, could be exposed within the internal network. To mitigate this issue, organizations often use additional security measures, such as network segmentation and encryption between the load balancer and application servers.
+
+    Having Only One MySQL Server Capable of Accepting Writes:
+
+        Single Point of Failure (SPOF): If there is only one MySQL server capable of accepting writes, it becomes a single point of failure. If this server goes down or experiences issues, write operations will be unavailable, leading to potential data loss or application downtime.
+
+        Scalability Limitation: A single MySQL server may not handle high write loads efficiently. As traffic and data grow, the server may become a performance bottleneck. To address this, consider implementing a database clustering or replication solution to distribute write operations and enhance fault tolerance.
+
+    Servers with All the Same Components (Database, Web Server, and Application Server):
+
+        Lack of Redundancy: Servers with identical components can be a problem because if one component, such as the database or application server, fails on one server, the entire server becomes unavailable for that particular function. This lack of redundancy can lead to service disruption.
+
+        Resource Inefficiency: In some cases, having all servers with the same components can result in resource inefficiency. For example, if the database server component requires more CPU and memory resources than the others, servers with less demand for those resources may be underutilized.
+
+        Complex Maintenance: Maintaining uniform configurations across servers can be complex and challenging, especially as the infrastructure scales. Differences in resource requirements or software dependencies may necessitate unique configurations.            
+
+
+
+
