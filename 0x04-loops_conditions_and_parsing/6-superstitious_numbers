@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+# This script displays numbers from 1 to 20 with specific messages for certain iterations.
+
+# Initialize a counter
+counter=1
+
+# Define the maximum number of iterations
+max_iterations=20
+
+# Use a while loop to iterate from 1 to 20
+while [ $counter -le $max_iterations ]; do
+    case $counter in
+        4)
+            echo "4"
+            echo "bad luck from China"
+            ;;
+        9)
+            echo "9"
+            echo "bad luck from Japan"
+            ;;
+        17)
+            echo "17"
+            echo "bad luck from Italy"
+            ;;
+        *)
+            echo "$counter"
+            ;;
+    esac
+    
+    # Increment the counter
+    ((counter++))
+done
+
