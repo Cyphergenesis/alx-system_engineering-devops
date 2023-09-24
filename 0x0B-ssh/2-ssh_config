@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+# Configures SSH-Client file 
 Hackers@ville
     cee-jay	100.26.18.89
     User ubuntu  
