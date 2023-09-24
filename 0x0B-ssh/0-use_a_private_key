@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# Set the server IP address
+server_ip="100.26.18.89"
+
+# Use ssh with the -i flag to specify the private key and the -l flag to specify the username
+ssh -i ~/.ssh/school ubuntu@$server_ip
+
+# Print a message when the SSH session is closed
+echo "Connection to $server_ip closed."
+
