@@ -21,11 +21,4 @@ fi
 # Test Nginx configuration for syntax errors
 nginx -t
 
-# If the configuration test is successful, reload Nginx
-if [ $? -eq 0 ]; then
-    service nginx reload
-    echo "Nginx configuration updated and reloaded successfully."
-else
-    echo "Nginx configuration test failed. Please check the configuration."
-fi
 
