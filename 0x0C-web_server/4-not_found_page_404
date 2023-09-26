@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+# Define the Nginx configuration file path
+nginx_conf_file="/etc/nginx/sites-available/default"
+
+# Define the custom 404 error page location
+error_page_block="error_page 404 /404.html;"
+
+# Define the location block for the custom 404 page
+location_block="location = /404.html {
+    internal;
+    root /usr/share/nginx/html;
+    echo 'Ceci n'\''est pas une page';
+}"
+
+# Check if Nginx is installed
+if ! command -v nginx &>/dev/null; then
+    echo "Nginx is not installed. Exiting."
+    exit 1
+fi
+
+# Check if the error page and location block already exist in the config
+if sudo grep -q "error_page 404 /404.html;" "$nginx_conf_file" || sudo grep -q "location = /404.html {" "$nginx_conf_file"; then
+    echo "Error page or location block already exists. Exiting."
+    exit 1
+fi
+
+# Add the error page block and location block to the Nginx configuration file
+sudo sed -i "/server {/a $error_page_block" "$nginx_conf_file"
+sudo sed -i "/server {/a $location_block" "$nginx_conf_file"
+
+# Test Nginx configuration for errors
+if sudo nginx -t; then
+    echo "Nginx configuration test successful."
+    echo "Reloading Nginx..."
+    sudo systemctl reload nginx
+    echo "Nginx reloaded."
+else
+    echo "Nginx configuration test failed. Rolling back changes."
+    sudo sed -i "/error_page 404 \/404.html;/d" "$nginx_conf_file"
+    sudo sed -i "/location = \/404.html {/,+3d" "$nginx_conf_file"
+    echo "Nginx configuration rolled back."
+fi
+
