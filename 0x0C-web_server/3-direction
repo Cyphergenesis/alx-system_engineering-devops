@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+# Set the redirection URL
+REDIRECT_URL="https://www.youtube.com/watch?v=QH2-TGUlwu4"
+
+# Nginx configuration file path
+NGINX_CONF="/etc/nginx/sites-available/default"
+
+# Check if Nginx config file exists
+if [ ! -f "$NGINX_CONF" ]; then
+    echo "Nginx configuration file not found: $NGINX_CONF"
+    exit 1
+fi
+
+# Add or update the redirection rule in the Nginx config file
+if grep -q "location /redirect_me" "$NGINX_CONF"; then
+    sed -i "s|location /redirect_me {[^}]*}|location /redirect_me { return 301 $REDIRECT_URL; }|" "$NGINX_CONF"
+else
+    echo "location /redirect_me { return 301 $REDIRECT_URL; }" >> "$NGINX_CONF"
+fi
+
+# Test Nginx configuration for syntax errors
+nginx -t
+
+# If the configuration test is successful, reload Nginx
+if [ $? -eq 0 ]; then
+    service nginx reload
+    echo "Nginx configuration updated and reloaded successfully."
+else
+    echo "Nginx configuration test failed. Please check the configuration."
+fi
+
