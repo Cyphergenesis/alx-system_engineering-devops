@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# Simple steps in Configuring the 8080 port
+docker stop <container_name_or_id>
+docker rm <container_name_or_id>
+# Use an official Apache runtime as a parent image
+FROM httpd:latest
+
+# Replace the default index.html with "Hello Holberton"
+RUN echo "Hello Holberton" > /usr/local/apache2/htdocs/index.html
+docker build -t my-apache-image .
+docker run -d -p 8080:80 my-apache-image
+
+curl http://localhost:8080
+
+Hello Holberton
+
