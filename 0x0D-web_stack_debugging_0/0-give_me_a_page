@@ -1,16 +1,18 @@
 #!/usr/bin/env bash
-# Simple steps in Configuring the 8080 port
-docker stop <container_name_or_id>
-docker rm <container_name_or_id>
-# Use an official Apache runtime as a parent image
-FROM httpd:latest
+# Start the Docker container with a custom bridge network
+docker run -p 8080:80 -d -it --network host holbertonschool/265-0
 
-# Replace the default index.html with "Hello Holberton"
-RUN echo "Hello Holberton" > /usr/local/apache2/htdocs/index.html
-docker build -t my-apache-image .
-docker run -d -p 8080:80 my-apache-image
+# Wait for the container to be up and running (adjust sleep time as needed)
+sleep 5
 
-curl http://localhost:8080
-
-Hello Holberton
+# Check if the container is running
+if docker ps | grep -q "holbertonschool/265-0"; then
+    echo "Docker container is running."
+    
+    # Test the container by using its IP address
+    container_ip="$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' "$(docker ps -q)")"
+    curl "$container_ip:8080"
+else
+    echo "Docker container is not running."
+fi
 
