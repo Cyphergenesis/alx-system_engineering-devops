@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+# This script configures Nginx to perform a 301 permanent redirect
+
+# Install Nginx if not already installed
+if ! dpkg -l | grep -q "nginx"; then
+    sudo apt-get update
+    sudo apt-get install -y nginx
+fi
+
+# Create a configuration file for the redirection
+echo "server {
+    listen 80;
+    server_name _;
+
+    location /redirect_me {
+        return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
+    }
+
+    # Add any other server blocks or configurations here if needed
+}" | sudo tee /etc/nginx/sites-available/redirect_me > /dev/null
+
+# Create a symbolic link to enable the site
+sudo ln -s /etc/nginx/sites-available/redirect_me /etc/nginx/sites-enabled/
+
+# Test the Nginx configuration
+sudo nginx -t
+
+# Reload Nginx to apply changes
+sudo /etc/init.d/nginx reload
+
+
